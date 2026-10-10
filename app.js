@@ -1,5 +1,3 @@
-'use strict';
-
 const DEFAULT_ITEMS = [
     {
         id: 'cpu-ryzen-7800x3d',
