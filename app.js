@@ -1,3 +1,5 @@
+'use strict';
+
 const DEFAULT_ITEMS = [
     {
         id: 'cpu-ryzen-7800x3d',
@@ -93,7 +95,7 @@ const state = {
     sortBy: 'name-asc',
 };
 
-const STORAGE_KEY = 'pcparts.items.v1';
+const STORAGE_KEY = 'pcparts.items.v2';
 
 const CATEGORY_LABELS = {
     cpu: 'Процессор',
@@ -206,10 +208,6 @@ function createCardElement(item) {
     img.src = item.image;
     img.alt = item.name;
     img.loading = 'lazy';
-    img.onerror = function () {
-        this.onerror = null;
-        this.src = 'images/placeholder.svg';
-    };
     card.appendChild(img);
 
     const body = document.createElement('div');
@@ -419,7 +417,7 @@ function validateField(fieldName) {
     }
 
     field.error.textContent = '';
-    input.classList.remove('is-invalid');
+    field.input.classList.remove('is-invalid');
     return true;
 }
 
@@ -453,7 +451,7 @@ function handleFormSubmit(event) {
         vendor: 'other',
         price: Number(fields.price.input.value),
         description: fields.description.input.value.trim(),
-        image: 'images/placeholder.svg',
+        image: 'photos/images.jpg',
         specs: [],
     };
 
