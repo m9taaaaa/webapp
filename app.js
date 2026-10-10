@@ -7,7 +7,7 @@ const DEFAULT_ITEMS = [
         vendor: 'amd',
         name: 'AMD Ryzen 7 7800X3D',
         description: 'Игровой процессор с 3D-кэшем, отличный выбор для сборки под игры.',
-        image: 'images/cpu-ryzen.svg',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8MR99M8h6dJxrUXSecMcmlDZqz8FZPDjgfa1onVHMAg3T4gPyfDzASAwz&s=10',
         price: 45000,
         specs: [
             { label: 'Тип', value: 'Процессор' },
@@ -21,7 +21,7 @@ const DEFAULT_ITEMS = [
         vendor: 'intel',
         name: 'Intel Core i5-14600K',
         description: 'Универсальный процессор для работы и игр, хорошо разгоняется.',
-        image: 'images/cpu-intel.svg',
+        image: 'https://hyperpc.ru/images/catalog/hardware/processors/intel/12th/inter-core-12th-f.jpg?mtime=1641371993',
         price: 32000,
         specs: [
             { label: 'Тип', value: 'Процессор' },
@@ -35,7 +35,7 @@ const DEFAULT_ITEMS = [
         vendor: 'nvidia',
         name: 'NVIDIA GeForce RTX 4070 Super',
         description: 'Видеокарта для 1440p-гейминга и работы с нейросетями.',
-        image: 'images/gpu-nvidia.svg',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDMy29VF-ZiuJx5bEywLBDIf6sjfHVnwBjc5ohpQF7pQ&s=10',
         price: 75000,
         specs: [
             { label: 'Тип', value: 'Видеокарта' },
@@ -49,7 +49,7 @@ const DEFAULT_ITEMS = [
         vendor: 'amd',
         name: 'AMD Radeon RX 7800 XT',
         description: 'Сбалансированное решение для игр в 1440p с большим объёмом памяти.',
-        image: 'images/gpu-amd.svg',
+        image: 'https://ir.ozone.ru/s3/multimedia-i/c1000/6816890790.jpg',
         price: 68000,
         specs: [
             { label: 'Тип', value: 'Видеокарта' },
@@ -63,7 +63,7 @@ const DEFAULT_ITEMS = [
         vendor: 'msi',
         name: 'MSI MAG B650 Tomahawk',
         description: 'Надёжная плата под AM5 с хорошим питанием и VRM-охлаждением.',
-        image: 'images/mb-b650.svg',
+        image: 'photos/product_166478620721bbeb5fac5e7800fc1614cf6e023720.webp',
         price: 22000,
         specs: [
             { label: 'Тип', value: 'Материнская плата' },
@@ -77,7 +77,7 @@ const DEFAULT_ITEMS = [
         vendor: 'kingston',
         name: 'Kingston Fury Beast DDR5-6000',
         description: 'Комплект 2×16 ГБ с профилем EXPO для быстрой загрузки и работы.',
-        image: 'images/ram-ddr5.svg',
+        image: 'photos/images.jpg',
         price: 14000,
         specs: [
             { label: 'Тип', value: 'Оперативная память' },
@@ -208,6 +208,10 @@ function createCardElement(item) {
     img.src = item.image;
     img.alt = item.name;
     img.loading = 'lazy';
+    img.onerror = function () {
+        this.onerror = null;
+        this.src = 'images/placeholder.svg';
+    };
     card.appendChild(img);
 
     const body = document.createElement('div');
