@@ -10,13 +10,13 @@
 
     <header class="site-header">
         <div class="header-inner">
-            <a href="#top" class="logo">PC&nbsp;Parts</a>
+            <a href="#top" class="logo">PC&nbsp;Parts&nbsp;(Собери&nbsp;свой&nbsp;ПК&nbsp;с&nbsp;нами)</a>
             <nav class="main-nav" aria-label="Основная навигация">
                 <ul>
-                    <li><a href="#catalog">Каталог</a></li>
-                    <li><a href="#add">Добавить</a></li>
+                    <li><a href="#catalog">Наш Каталог</a></li>
                     <li><a href="#filters">Подбор</a></li>
                     <li><a href="#about">Совет</a></li>
+                    <li><a href="#konst">Конструктор ПК</a></li>
                 </ul>
             </nav>
         </div>
@@ -46,23 +46,22 @@
                 <div class="field">
                     <label for="category">Тип комплектующего</label>
                     <select id="category" name="category">
-                        <option value="">Все типы</option>
-                        <option value="cpu">Процессор</option>
-                        <option value="gpu">Видеокарта</option>
-                        <option value="mb">Материнская плата</option>
-                        <option value="ram">Оперативная память</option>
+                        <option>Все типы</option>
+                        <option>Процессор</option>
+                        <option>Видеокарта</option>
+                        <option>Материнская плата</option>
+                        <option>Оперативная память</option>
                     </select>
                 </div>
 
                 <div class="field">
                     <label for="vendor">Производитель</label>
                     <select id="vendor" name="vendor">
-                        <option value="">Любой</option>
-                        <option value="amd">AMD</option>
-                        <option value="intel">Intel</option>
-                        <option value="nvidia">NVIDIA</option>
-                        <option value="kingston">Kingston</option>
-                        <option value="msi">MSI</option>
+                        <option>Любой</option>
+                        <option>AMD</option>
+                        <option>Intel</option>
+                        <option>NVIDIA</option>
+                        <option>Kingston</option>
                     </select>
                 </div>
 
@@ -76,72 +75,102 @@
             </form>
         </section>
 
-        <section id="add" class="filters" aria-labelledby="form-title">
-            <h2 id="form-title">Добавить комплектующее</h2>
-            <form id="add-form" class="filter-form" novalidate>
-
-                <div class="field">
-                    <label for="add-name">Название</label>
-                    <input type="text" id="add-name" name="name"
-                           required minlength="3" maxlength="80"
-                           placeholder="Например: AMD Ryzen 7 7800X3D">
-                </div>
-
-                <div class="field">
-                    <label for="add-category">Тип</label>
-                    <select id="add-category" name="category" required>
-                        <option value="">Выберите тип</option>
-                        <option value="cpu">Процессор</option>
-                        <option value="gpu">Видеокарта</option>
-                        <option value="mb">Материнская плата</option>
-                        <option value="ram">Оперативная память</option>
-                    </select>
-                </div>
-
-                <div class="field">
-                    <label for="add-vendor">Производитель</label>
-                    <select id="add-vendor" name="vendor" required>
-                        <option value="">Выберите производителя</option>
-                        <option value="amd">AMD</option>
-                        <option value="intel">Intel</option>
-                        <option value="nvidia">NVIDIA</option>
-                        <option value="kingston">Kingston</option>
-                        <option value="msi">MSI</option>
-                    </select>
-                </div>
-
-                <div class="field">
-                    <label for="add-price">Цена, ₽</label>
-                    <input type="number" id="add-price" name="price"
-                           required min="1" max="1000000" step="100"
-                           placeholder="45000">
-                </div>
-
-                <div class="field">
-                    <label for="add-description">Описание</label>
-                    <input type="text" id="add-description" name="description"
-                           required minlength="5" maxlength="200"
-                           placeholder="Короткое описание">
-                </div>
-
-                <div class="field">
-                    <label for="add-image">Путь к картинке (необязательно)</label>
-                    <input type="text" id="add-image" name="image"
-                           placeholder="images/placeholder.svg">
-                </div>
-
-                <button type="submit" class="btn-primary">Добавить</button>
-            </form>
-        </section>
-
         <section id="catalog" class="catalog" aria-labelledby="catalog-title">
             <h2 id="catalog-title">Популярные комплектующие</h2>
 
-            <div class="cards-grid"></div>
+            <div class="cards-grid">
 
-            <p id="catalog-empty" class="catalog-empty" hidden>
-                Ничего не найдено. Попробуйте изменить фильтры.
-            </p>
+                <article class="card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8MR99M8h6dJxrUXSecMcmlDZqz8FZPDjgfa1onVHMAg3T4gPyfDzASAwz&s=10"
+                         alt="Процессор AMD Ryzen 7 7800X3D">
+                    <div class="card-body">
+                        <h3>AMD Ryzen 7 7800X3D</h3>
+                        <p>Игровой процессор с 3D-кэшем, отличный выбор для сборки под игры.</p>
+                        <ul class="card-meta">
+                            <li><span>Тип:</span> Процессор</li>
+                            <li><span>Сокет:</span> AM5</li>
+                            <li><span>TDP:</span> 120 Вт</li>
+                            <li><span>Цена:</span> 45 000 ₽</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="https://hyperpc.ru/images/catalog/hardware/processors/intel/12th/inter-core-12th-f.jpg?mtime=1641371993"
+                         alt="Процессор Intel Core i5-14600K">
+                    <div class="card-body">
+                        <h3>Intel Core i5-14600K</h3>
+                        <p>Универсальный процессор для работы и игр, хорошо разгоняется.</p>
+                        <ul class="card-meta">
+                            <li><span>Тип:</span> Процессор</li>
+                            <li><span>Сокет:</span> LGA1700</li>
+                            <li><span>TDP:</span> 125 Вт</li>
+                            <li><span>Цена:</span> 32 000 ₽</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDMy29VF-ZiuJx5bEywLBDIf6sjfHVnwBjc5ohpQF7pQ&s=10"
+                         alt="Видеокарта NVIDIA GeForce RTX 4070 Super">
+                    <div class="card-body">
+                        <h3>NVIDIA GeForce RTX 4070 Super</h3>
+                        <p>Видеокарта для 1440p-гейминга и работы с нейросетями.</p>
+                        <ul class="card-meta">
+                            <li><span>Тип:</span> Видеокарта</li>
+                            <li><span>Память:</span> 12 ГБ GDDR6X</li>
+                            <li><span>TDP:</span> 220 Вт</li>
+                            <li><span>Цена:</span> 75 000 ₽</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="https://ir.ozone.ru/s3/multimedia-i/c1000/6816890790.jpg"
+                         alt="Видеокарта AMD Radeon RX 7800 XT">
+                    <div class="card-body">
+                        <h3>AMD Radeon RX 7800 XT</h3>
+                        <p>Сбалансированное решение для игр в 1440p с большим объёмом памяти.</p>
+                        <ul class="card-meta">
+                            <li><span>Тип:</span> Видеокарта</li>
+                            <li><span>Память:</span> 16 ГБ GDDR6</li>
+                            <li><span>TDP:</span> 263 Вт</li>
+                            <li><span>Цена:</span> 68 000 ₽</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="photos/product_166478620721bbeb5fac5e7800fc1614cf6e023720.webp"
+                         alt="Материнская плата MSI MAG B650 Tomahawk">
+                    <div class="card-body">
+                        <h3>MSI MAG B650 Tomahawk</h3>
+                        <p>Надёжная плата под AM5 с хорошим питанием и VRM-охлаждением.</p>
+                        <ul class="card-meta">
+                            <li><span>Тип:</span> Материнская плата</li>
+                            <li><span>Сокет:</span> AM5</li>
+                            <li><span>Формат:</span> ATX</li>
+                            <li><span>Цена:</span> 22 000 ₽</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="photos/images.jpg"
+                         alt="Комплект оперативной памяти Kingston Fury DDR5">
+                    <div class="card-body">
+                        <h3>Kingston Fury Beast DDR5-6000</h3>
+                        <p>Комплект 2×16 ГБ с профилем EXPO для быстрой загрузки и работы.</p>
+                        <ul class="card-meta">
+                            <li><span>Тип:</span> Оперативная память</li>
+                            <li><span>Объём:</span> 32 ГБ (2×16)</li>
+                            <li><span>Частота:</span> 6000 МГц</li>
+                            <li><span>Цена:</span> 14 000 ₽</li>
+                        </ul>
+                    </div>
+                </article>
+
+            </div>
         </section>
 
         <section id="about" class="about" aria-labelledby="about-title">
@@ -163,10 +192,10 @@
     </main>
 
     <footer class="site-footer">
-        <p><strong>PC Parts</strong> — учебный проект каталога комплектующих.</p>
+        <p>PC Parts — учебный проект каталога комплектующих.</p>
         <p>2026 · Цены и характеристики приведены для примера.</p>
+        <p>Наши социальные сети - </p>
     </footer>
 
-    <script src="app.js" defer></script>
 </body>
 </html>
