@@ -46,22 +46,32 @@
                 <div class="field">
                     <label for="category">Тип комплектующего</label>
                     <select id="category" name="category">
-                        <option>Все типы</option>
-                        <option>Процессор</option>
-                        <option>Видеокарта</option>
-                        <option>Материнская плата</option>
-                        <option>Оперативная память</option>
+                        <option value="all">Все категории</option>
+                        <option value="cpu">Процессор</option>
+                        <option value="gpu">Видеокарта</option>
+                        <option value="mb">Материнская плата</option>
+                        <option value="ram">Оперативная память</option>
                     </select>
                 </div>
 
                 <div class="field">
                     <label for="vendor">Производитель</label>
                     <select id="vendor" name="vendor">
-                        <option>Любой</option>
-                        <option>AMD</option>
-                        <option>Intel</option>
-                        <option>NVIDIA</option>
-                        <option>Kingston</option>
+                        <option value="all">Любой</option>
+                        <option value="amd">AMD</option>
+                        <option value="intel">Intel</option>
+                        <option value="nvidia">NVIDIA</option>
+                        <option value="kingston">Kingston</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="sort">Сортировка</label>
+                    <select id="sort" name="sort">
+                        <option value="name-asc">По названию (А–Я)</option>
+                        <option value="name-desc">По названию (Я–А)</option>
+                        <option value="price-asc">Сначала дешёвые</option>
+                        <option value="price-desc">Сначала дорогие</option>
                     </select>
                 </div>
 
@@ -70,107 +80,23 @@
                     <input type="number" id="max-price" name="max_price"
                            min="0" step="1000" placeholder="120000">
                 </div>
-
-                <button type="submit" class="btn-primary">Подобрать</button>
             </form>
+
+            <div class="filters-actions">
+                <button type="button" id="open-modal" class="btn-primary">
+                    Добавить комплектующее
+                </button>
+            </div>
         </section>
 
         <section id="catalog" class="catalog" aria-labelledby="catalog-title">
             <h2 id="catalog-title">Популярные комплектующие</h2>
 
-            <div class="cards-grid">
+            <div class="cards-grid"></div>
 
-                <article class="card">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8MR99M8h6dJxrUXSecMcmlDZqz8FZPDjgfa1onVHMAg3T4gPyfDzASAwz&s=10"
-                         alt="Процессор AMD Ryzen 7 7800X3D">
-                    <div class="card-body">
-                        <h3>AMD Ryzen 7 7800X3D</h3>
-                        <p>Игровой процессор с 3D-кэшем, отличный выбор для сборки под игры.</p>
-                        <ul class="card-meta">
-                            <li><span>Тип:</span> Процессор</li>
-                            <li><span>Сокет:</span> AM5</li>
-                            <li><span>TDP:</span> 120 Вт</li>
-                            <li><span>Цена:</span> 45 000 ₽</li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img src="https://hyperpc.ru/images/catalog/hardware/processors/intel/12th/inter-core-12th-f.jpg?mtime=1641371993"
-                         alt="Процессор Intel Core i5-14600K">
-                    <div class="card-body">
-                        <h3>Intel Core i5-14600K</h3>
-                        <p>Универсальный процессор для работы и игр, хорошо разгоняется.</p>
-                        <ul class="card-meta">
-                            <li><span>Тип:</span> Процессор</li>
-                            <li><span>Сокет:</span> LGA1700</li>
-                            <li><span>TDP:</span> 125 Вт</li>
-                            <li><span>Цена:</span> 32 000 ₽</li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDMy29VF-ZiuJx5bEywLBDIf6sjfHVnwBjc5ohpQF7pQ&s=10"
-                         alt="Видеокарта NVIDIA GeForce RTX 4070 Super">
-                    <div class="card-body">
-                        <h3>NVIDIA GeForce RTX 4070 Super</h3>
-                        <p>Видеокарта для 1440p-гейминга и работы с нейросетями.</p>
-                        <ul class="card-meta">
-                            <li><span>Тип:</span> Видеокарта</li>
-                            <li><span>Память:</span> 12 ГБ GDDR6X</li>
-                            <li><span>TDP:</span> 220 Вт</li>
-                            <li><span>Цена:</span> 75 000 ₽</li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img src="https://ir.ozone.ru/s3/multimedia-i/c1000/6816890790.jpg"
-                         alt="Видеокарта AMD Radeon RX 7800 XT">
-                    <div class="card-body">
-                        <h3>AMD Radeon RX 7800 XT</h3>
-                        <p>Сбалансированное решение для игр в 1440p с большим объёмом памяти.</p>
-                        <ul class="card-meta">
-                            <li><span>Тип:</span> Видеокарта</li>
-                            <li><span>Память:</span> 16 ГБ GDDR6</li>
-                            <li><span>TDP:</span> 263 Вт</li>
-                            <li><span>Цена:</span> 68 000 ₽</li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img src="photos/product_166478620721bbeb5fac5e7800fc1614cf6e023720.webp"
-                         alt="Материнская плата MSI MAG B650 Tomahawk">
-                    <div class="card-body">
-                        <h3>MSI MAG B650 Tomahawk</h3>
-                        <p>Надёжная плата под AM5 с хорошим питанием и VRM-охлаждением.</p>
-                        <ul class="card-meta">
-                            <li><span>Тип:</span> Материнская плата</li>
-                            <li><span>Сокет:</span> AM5</li>
-                            <li><span>Формат:</span> ATX</li>
-                            <li><span>Цена:</span> 22 000 ₽</li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <img src="photos/images.jpg"
-                         alt="Комплект оперативной памяти Kingston Fury DDR5">
-                    <div class="card-body">
-                        <h3>Kingston Fury Beast DDR5-6000</h3>
-                        <p>Комплект 2×16 ГБ с профилем EXPO для быстрой загрузки и работы.</p>
-                        <ul class="card-meta">
-                            <li><span>Тип:</span> Оперативная память</li>
-                            <li><span>Объём:</span> 32 ГБ (2×16)</li>
-                            <li><span>Частота:</span> 6000 МГц</li>
-                            <li><span>Цена:</span> 14 000 ₽</li>
-                        </ul>
-                    </div>
-                </article>
-
-            </div>
+            <p id="catalog-empty" class="catalog-empty" hidden>
+                Ничего не найдено. Попробуйте изменить фильтры.
+            </p>
         </section>
 
         <section id="about" class="about" aria-labelledby="about-title">
@@ -197,5 +123,69 @@
         <p>Наши социальные сети - </p>
     </footer>
 
+    <div id="modal" class="modal" hidden>
+        <div id="modal-backdrop" class="modal-backdrop"></div>
+
+        <div class="modal-window" role="dialog" aria-modal="true"
+             aria-labelledby="modal-title">
+
+            <div class="modal-header">
+                <h2 id="modal-title">Добавить комплектующее</h2>
+                <button type="button" id="modal-close" class="modal-close"
+                        aria-label="Закрыть">×</button>
+            </div>
+
+            <form id="add-form" class="modal-form" novalidate>
+
+                <div class="field">
+                    <label for="add-name">Название</label>
+                    <input type="text" id="add-name" name="name"
+                           required minlength="3" maxlength="80"
+                           placeholder="Например: AMD Ryzen 7 7800X3D">
+                    <span class="field-error" id="error-name"></span>
+                </div>
+
+                <div class="field">
+                    <label for="add-category">Тип</label>
+                    <select id="add-category" name="category" required>
+                        <option value="">Выберите тип</option>
+                        <option value="cpu">Процессор</option>
+                        <option value="gpu">Видеокарта</option>
+                        <option value="mb">Материнская плата</option>
+                        <option value="ram">Оперативная память</option>
+                    </select>
+                    <span class="field-error" id="error-category"></span>
+                </div>
+
+                <div class="field">
+                    <label for="add-price">Цена, ₽</label>
+                    <input type="number" id="add-price" name="price"
+                           required min="1" max="1000000" step="100"
+                           placeholder="45000">
+                    <span class="field-error" id="error-price"></span>
+                </div>
+
+                <div class="field">
+                    <label for="add-description">Описание</label>
+                    <input type="text" id="add-description" name="description"
+                           required minlength="5" maxlength="200"
+                           placeholder="Короткое описание">
+                    <span class="field-error" id="error-description"></span>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="modal-cancel" class="btn-secondary">
+                        Отмена
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        Добавить
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="main.js" defer></script>
 </body>
 </html>
