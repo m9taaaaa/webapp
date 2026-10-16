@@ -429,6 +429,26 @@ body.modal-open {
     border-color: var(--color-danger);
     background-color: #fff5f4;
 }
+.modal-form .field input[type="file"] {
+    padding: 0.4rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.modal-form .field input[type="file"]::file-selector-button {
+    padding: 0.4rem 0.9rem;
+    margin-right: 0.6rem;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--color-accent);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.modal-form .field input[type="file"]::file-selector-button:hover {
+    background-color: var(--color-accent-dark);
+}
 
 .modal-actions {
     display: flex;
