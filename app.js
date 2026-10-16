@@ -87,6 +87,8 @@ const DEFAULT_ITEMS = [
     },
 ];
 
+const DEFAULT_IMAGE = 'photos/images.jpg';
+
 const state = {
     items: [],
     searchQuery: '',
@@ -95,7 +97,7 @@ const state = {
     sortBy: 'name-asc',
 };
 
-const STORAGE_KEY = 'pcparts.items.v2';
+const STORAGE_KEY = 'pcparts.items.v3';
 
 const CATEGORY_LABELS = {
     cpu: 'Процессор',
@@ -134,6 +136,14 @@ const fields = {
     description: {
         input: document.getElementById('add-description'),
         error: document.getElementById('error-description'),
+    },
+    imageUrl: {
+        input: document.getElementById('add-image-url'),
+        error: document.getElementById('error-image-url'),
+    },
+    imageFile: {
+        input: document.getElementById('add-image-file'),
+        error: document.getElementById('error-image-file'),
     },
 };
 
@@ -208,6 +218,10 @@ function createCardElement(item) {
     img.src = item.image;
     img.alt = item.name;
     img.loading = 'lazy';
+    img.onerror = function () {
+        this.onerror = null;
+        this.src = DEFAULT_IMAGE;
+    };
     card.appendChild(img);
 
     const body = document.createElement('div');
@@ -417,14 +431,15 @@ function validateField(fieldName) {
     }
 
     field.error.textContent = '';
-    field.input.classList.remove('is-invalid');
+    input.classList.remove('is-invalid');
     return true;
 }
 
-function validateForm() {
+function validateRequiredFields() {
+    const requiredNames = ['name', 'category', 'price', 'description'];
     let isValid = true;
 
-    Object.keys(fields).forEach(fieldName => {
+    requiredNames.forEach(fieldName => {
         const fieldValid = validateField(fieldName);
         if (fieldValid === false) {
             isValid = false;
@@ -434,15 +449,70 @@ function validateForm() {
     return isValid;
 }
 
-function handleFormSubmit(event) {
+function validateOptionalUrl() {
+    const input = fields.imageUrl.input;
+
+    if (input.value.trim() === '') {
+        input.classList.remove('is-invalid');
+        fields.imageUrl.error.textContent = '';
+        return true;
+    }
+
+    if (input.validity.typeMismatch || input.validity.badInput) {
+        showFieldError('imageUrl', 'Введите корректную ссылку (http:// или https://).');
+        return false;
+    }
+
+    input.classList.remove('is-invalid');
+    fields.imageUrl.error.textContent = '';
+    return true;
+}
+
+function readFileAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+    });
+}
+
+async function resolveImageSource() {
+    const fileInput = fields.imageFile.input;
+    const urlInput = fields.imageUrl.input;
+
+    if (fileInput.files !== null && fileInput.files.length > 0) {
+        try {
+            const dataUrl = await readFileAsDataUrl(fileInput.files[0]);
+            return dataUrl;
+        } catch (err) {
+            console.warn('Не удалось прочитать файл:', err);
+            showFieldError('imageFile', 'Не удалось прочитать файл.');
+        }
+    }
+
+    const url = urlInput.value.trim();
+    if (url !== '') {
+        return url;
+    }
+
+    return DEFAULT_IMAGE;
+}
+
+async function handleFormSubmit(event) {
     event.preventDefault();
     clearFormErrors();
 
-    if (validateForm() === false) {
+    const validRequired = validateRequiredFields();
+    const validUrl = validateOptionalUrl();
+
+    if (validRequired === false || validUrl === false) {
         const firstInvalid = addForm.querySelector('.is-invalid');
         if (firstInvalid !== null) firstInvalid.focus();
         return;
     }
+
+    const image = await resolveImageSource();
 
     const data = {
         id: 'custom-' + Date.now(),
@@ -451,7 +521,7 @@ function handleFormSubmit(event) {
         vendor: 'other',
         price: Number(fields.price.input.value),
         description: fields.description.input.value.trim(),
-        image: 'photos/images.jpg',
+        image: image,
         specs: [],
     };
 
