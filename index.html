@@ -83,6 +83,21 @@
                 </div>
             </form>
 
+
+                <div class="field">
+                    <label for="add-image-url">Ссылка на изображение</label>
+                    <input type="url" id="add-image-url" name="imageUrl"
+                           placeholder="https://example.com/photo.jpg">
+                    <span class="field-error" id="error-image-url"></span>
+                </div>
+
+                <div class="field">
+                    <label for="add-image-file">…или загрузите файл</label>
+                    <input type="file" id="add-image-file" name="imageFile"
+                           accept="image/*">
+                    <span class="field-error" id="error-image-file"></span>
+                </div>
+
             <div class="filters-actions">
                 <button type="button" id="open-modal" class="btn-primary">
                     Добавить комплектующее
