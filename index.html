@@ -81,16 +81,6 @@
                     <input type="number" id="max-price" name="max_price"
                            min="0" step="1000" placeholder="120000">
                 </div>
-
-                <div class="field">
-                    <label for="add-spec-1">Характеристика 1 (например, Сокет)</label>
-                    <input type="text" id="add-spec-1" name="spec1" placeholder="AM5 или LGA1700">
-                </div>
-
-                <div class="field">
-                    <label for="add-spec-2">Характеристика 2 (например, TDP)</label>
-                    <input type="text" id="add-spec-2" name="spec2" placeholder="120 Вт">
-                </div>
             </form>
 
             <div class="filters-actions">
@@ -183,6 +173,18 @@
                            placeholder="Короткое описание">
                     <span class="field-error" id="error-description"></span>
                 </div>
+
+                <!-- ДОБАВЛЕНО СЮДА: поля для характеристик -->
+                <div class="field">
+                    <label for="add-spec-1">Характеристика 1 (например, Сокет)</label>
+                    <input type="text" id="add-spec-1" name="spec1" placeholder="AM5 или LGA1700">
+                </div>
+
+                <div class="field">
+                    <label for="add-spec-2">Характеристика 2 (например, TDP)</label>
+                    <input type="text" id="add-spec-2" name="spec2" placeholder="120 Вт">
+                </div>
+                <!-- КОНЕЦ ВСТАВКИ -->
 
                 <div class="field">
                     <label for="add-image-url">Ссылка на изображение</label>
