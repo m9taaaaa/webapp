@@ -10,7 +10,6 @@ const DEFAULT_ITEMS = [
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8MR99M8h6dJxrUXSecMcmlDZqz8FZPDjgfa1onVHMAg3T4gPyfDzASAwz&s=10',
         price: 45000,
         specs: [
-            { label: 'Тип', value: 'Процессор' },
             { label: 'Сокет', value: 'AM5' },
             { label: 'TDP', value: '120 Вт' },
         ],
@@ -24,7 +23,6 @@ const DEFAULT_ITEMS = [
         image: 'https://hyperpc.ru/images/catalog/hardware/processors/intel/12th/inter-core-12th-f.jpg?mtime=1641371993',
         price: 32000,
         specs: [
-            { label: 'Тип', value: 'Процессор' },
             { label: 'Сокет', value: 'LGA1700' },
             { label: 'TDP', value: '125 Вт' },
         ],
@@ -38,7 +36,6 @@ const DEFAULT_ITEMS = [
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDMy29VF-ZiuJx5bEywLBDIf6sjfHVnwBjc5ohpQF7pQ&s=10',
         price: 75000,
         specs: [
-            { label: 'Тип', value: 'Видеокарта' },
             { label: 'Память', value: '12 ГБ GDDR6X' },
             { label: 'TDP', value: '220 Вт' },
         ],
@@ -52,7 +49,6 @@ const DEFAULT_ITEMS = [
         image: 'https://ir.ozone.ru/s3/multimedia-i/c1000/6816890790.jpg',
         price: 68000,
         specs: [
-            { label: 'Тип', value: 'Видеокарта' },
             { label: 'Память', value: '16 ГБ GDDR6' },
             { label: 'TDP', value: '263 Вт' },
         ],
@@ -66,7 +62,6 @@ const DEFAULT_ITEMS = [
         image: 'photos/product_166478620721bbeb5fac5e7800fc1614cf6e023720.webp',
         price: 22000,
         specs: [
-            { label: 'Тип', value: 'Материнская плата' },
             { label: 'Сокет', value: 'AM5' },
             { label: 'Формат', value: 'ATX' },
         ],
@@ -80,12 +75,30 @@ const DEFAULT_ITEMS = [
         image: 'photos/images.jpg',
         price: 14000,
         specs: [
-            { label: 'Тип', value: 'Оперативная память' },
             { label: 'Объём', value: '32 ГБ (2×16)' },
             { label: 'Частота', value: '6000 МГц' },
         ],
     },
 ];
+
+const SPECS_CONFIG = {
+    cpu: [
+        { id: 'spec-cpu-socket', label: 'Сокет', placeholder: 'AM5 или LGA1700', key: 'socket' },
+        { id: 'spec-cpu-tdp', label: 'TDP', placeholder: '120 Вт', key: 'tdp' }
+    ],
+    gpu: [
+        { id: 'spec-gpu-memory', label: 'Объём памяти', placeholder: '12 ГБ', key: 'memory' },
+        { id: 'spec-gpu-tdp', label: 'TDP', placeholder: '220 Вт', key: 'tdp' }
+    ],
+    mb: [
+        { id: 'spec-mb-socket', label: 'Сокет', placeholder: 'AM5 или LGA1700', key: 'socket' },
+        { id: 'spec-mb-form', label: 'Формат', placeholder: 'ATX или Micro-ATX', key: 'form' }
+    ],
+    ram: [
+        { id: 'spec-ram-size', label: 'Объём', placeholder: '32 ГБ', key: 'size' },
+        { id: 'spec-ram-speed', label: 'Частота', placeholder: '6000 МГц', key: 'speed' }
+    ]
+};
 
 const DEFAULT_IMAGE = 'photos/images.jpg';
 
@@ -97,7 +110,7 @@ const state = {
     sortBy: 'name-asc',
 };
 
-const STORAGE_KEY = 'pcparts.items.v4';
+const STORAGE_KEY = 'pcparts.items.v6';
 
 const CATEGORY_LABELS = {
     cpu: 'Процессор',
@@ -119,6 +132,7 @@ const modalCloseBtn = document.getElementById('modal-close');
 const modalCancelBtn = document.getElementById('modal-cancel');
 const openModalBtn = document.getElementById('open-modal');
 const addForm = document.getElementById('add-form');
+const dynamicSpecsContainer = document.getElementById('dynamic-specs');
 
 const fields = {
     name: {
@@ -144,17 +158,34 @@ const fields = {
     imageFile: {
         input: document.getElementById('add-image-file'),
         error: document.getElementById('error-image-file'),
-    },
-    // ДОБАВЛЕНЫ ПОЛЯ ДЛЯ ХАРАКТЕРИСТИК
-    spec1: {
-        input: document.getElementById('add-spec-1'),
-        error: null,
-    },
-    spec2: {
-        input: document.getElementById('add-spec-2'),
-        error: null,
-    },
+    }
 };
+
+function updateDynamicSpecs() {
+    dynamicSpecsContainer.innerHTML = '';
+    const category = fields.category.input.value;
+    
+    if (SPECS_CONFIG[category]) {
+        SPECS_CONFIG[category].forEach(spec => {
+            const fieldDiv = document.createElement('div');
+            fieldDiv.className = 'field';
+            
+            const label = document.createElement('label');
+            label.textContent = spec.label;
+            label.setAttribute('for', spec.id);
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = spec.id;
+            input.placeholder = spec.placeholder;
+            input.dataset.key = spec.key;
+            
+            fieldDiv.appendChild(label);
+            fieldDiv.appendChild(input);
+            dynamicSpecsContainer.appendChild(fieldDiv);
+        });
+    }
+}
 
 function saveToStorage() {
     try {
@@ -359,6 +390,7 @@ function openModal() {
     document.body.classList.add('modal-open');
     clearFormErrors();
     addForm.reset();
+    updateDynamicSpecs(); 
     fields.name.input.focus();
 }
 
@@ -382,7 +414,6 @@ function handleEscape(event) {
 
 function clearFormErrors() {
     Object.values(fields).forEach(field => {
-        // ЗАЩИТА ОТ ОШИБКИ: проверяем, есть ли вообще объект error
         if (field.error !== null) {
             field.error.textContent = '';
         }
@@ -517,29 +548,29 @@ async function handleFormSubmit(event) {
     }
 
     const image = await resolveImageSource();
-
-    // СБОР ХАРАКТЕРИСТИК
+    const category = fields.category.input.value;
     const specs = [];
+    const dynamicInputs = dynamicSpecsContainer.querySelectorAll('input');
     
-    const spec1Value = fields.spec1.input.value.trim();
-    if (spec1Value !== '') {
-        specs.push({ label: 'Характеристика 1', value: spec1Value });
-    }
-
-    const spec2Value = fields.spec2.input.value.trim();
-    if (spec2Value !== '') {
-        specs.push({ label: 'Характеристика 2', value: spec2Value });
-    }
+    dynamicInputs.forEach(input => {
+        const val = input.value.trim();
+        if (val !== '') {
+            const fieldDiv = input.closest('.field');
+            const labelText = fieldDiv.querySelector('label').textContent.replace(':', '');
+            
+            specs.push({ label: labelText, value: val });
+        }
+    });
 
     const data = {
         id: 'custom-' + Date.now(),
         name: fields.name.input.value.trim(),
-        category: fields.category.input.value,
+        category: category,
         vendor: 'other',
         price: Number(fields.price.input.value),
         description: fields.description.input.value.trim(),
         image: image,
-        specs: specs, // ИСПОЛЬЗУЕМ СОБРАННЫЙ МАССИВ
+        specs: specs,
     };
 
     state.items.push(data);
@@ -565,6 +596,8 @@ function init() {
     modalCancelBtn.addEventListener('click', closeModal);
     modalBackdrop.addEventListener('click', handleModalBackdropClick);
     document.addEventListener('keydown', handleEscape);
+
+    fields.category.input.addEventListener('change', updateDynamicSpecs);
 
     addForm.addEventListener('submit', handleFormSubmit);
 
