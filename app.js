@@ -97,7 +97,7 @@ const state = {
     sortBy: 'name-asc',
 };
 
-const STORAGE_KEY = 'pcparts.items.v3';
+const STORAGE_KEY = 'pcparts.items.v4';
 
 const CATEGORY_LABELS = {
     cpu: 'Процессор',
@@ -144,9 +144,15 @@ const fields = {
     imageFile: {
         input: document.getElementById('add-image-file'),
         error: document.getElementById('error-image-file'),
-    
-    spec1: { input: document.getElementById('add-spec-1'), error: null },
-    spec2: { input: document.getElementById('add-spec-2'), error: null },
+    },
+    // ДОБАВЛЕНЫ ПОЛЯ ДЛЯ ХАРАКТЕРИСТИК
+    spec1: {
+        input: document.getElementById('add-spec-1'),
+        error: null,
+    },
+    spec2: {
+        input: document.getElementById('add-spec-2'),
+        error: null,
     },
 };
 
@@ -376,14 +382,19 @@ function handleEscape(event) {
 
 function clearFormErrors() {
     Object.values(fields).forEach(field => {
-        field.error.textContent = '';
+        // ЗАЩИТА ОТ ОШИБКИ: проверяем, есть ли вообще объект error
+        if (field.error !== null) {
+            field.error.textContent = '';
+        }
         field.input.classList.remove('is-invalid');
     });
 }
 
 function showFieldError(fieldName, message) {
     const field = fields[fieldName];
-    field.error.textContent = message;
+    if (field.error !== null) {
+        field.error.textContent = message;
+    }
     field.input.classList.add('is-invalid');
 }
 
@@ -397,34 +408,22 @@ function validateField(fieldName) {
     }
 
     if (input.validity.tooShort) {
-        showFieldError(
-            fieldName,
-            'Минимум ' + input.minLength + ' символов.'
-        );
+        showFieldError(fieldName, 'Минимум ' + input.minLength + ' символов.');
         return false;
     }
 
     if (input.validity.tooLong) {
-        showFieldError(
-            fieldName,
-            'Максимум ' + input.maxLength + ' символов.'
-        );
+        showFieldError(fieldName, 'Максимум ' + input.maxLength + ' символов.');
         return false;
     }
 
     if (input.validity.rangeUnderflow) {
-        showFieldError(
-            fieldName,
-            'Значение не может быть меньше ' + input.min + '.'
-        );
+        showFieldError(fieldName, 'Значение не может быть меньше ' + input.min + '.');
         return false;
     }
 
     if (input.validity.rangeOverflow) {
-        showFieldError(
-            fieldName,
-            'Значение не может быть больше ' + input.max + '.'
-        );
+        showFieldError(fieldName, 'Значение не может быть больше ' + input.max + '.');
         return false;
     }
 
@@ -433,7 +432,9 @@ function validateField(fieldName) {
         return false;
     }
 
-    field.error.textContent = '';
+    if (field.error !== null) {
+        field.error.textContent = '';
+    }
     input.classList.remove('is-invalid');
     return true;
 }
@@ -517,6 +518,19 @@ async function handleFormSubmit(event) {
 
     const image = await resolveImageSource();
 
+    // СБОР ХАРАКТЕРИСТИК
+    const specs = [];
+    
+    const spec1Value = fields.spec1.input.value.trim();
+    if (spec1Value !== '') {
+        specs.push({ label: 'Характеристика 1', value: spec1Value });
+    }
+
+    const spec2Value = fields.spec2.input.value.trim();
+    if (spec2Value !== '') {
+        specs.push({ label: 'Характеристика 2', value: spec2Value });
+    }
+
     const data = {
         id: 'custom-' + Date.now(),
         name: fields.name.input.value.trim(),
@@ -525,7 +539,7 @@ async function handleFormSubmit(event) {
         price: Number(fields.price.input.value),
         description: fields.description.input.value.trim(),
         image: image,
-        specs: [],
+        specs: specs, // ИСПОЛЬЗУЕМ СОБРАННЫЙ МАССИВ
     };
 
     state.items.push(data);
