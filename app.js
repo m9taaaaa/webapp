@@ -144,6 +144,9 @@ const fields = {
     imageFile: {
         input: document.getElementById('add-image-file'),
         error: document.getElementById('error-image-file'),
+    
+    spec1: { input: document.getElementById('add-spec-1'), error: null },
+    spec2: { input: document.getElementById('add-spec-2'), error: null },
     },
 };
 
