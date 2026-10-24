@@ -75,12 +75,6 @@
                         <option value="price-desc">Сначала дорогие</option>
                     </select>
                 </div>
-
-                <div class="field">
-                    <label for="max-price">Максимальная цена, ₽</label>
-                    <input type="number" id="max-price" name="max_price"
-                           min="0" step="1000" placeholder="120000">
-                </div>
             </form>
 
             <div class="filters-actions">
@@ -149,7 +143,7 @@
                 <div class="field">
                     <label for="add-category">Тип</label>
                     <select id="add-category" name="category" required>
-                        <option value="">Выберите тип</option>
+                        <option value="">Сначала выберите тип</option>
                         <option value="cpu">Процессор</option>
                         <option value="gpu">Видеокарта</option>
                         <option value="mb">Материнская плата</option>
@@ -174,17 +168,8 @@
                     <span class="field-error" id="error-description"></span>
                 </div>
 
-                <!-- ДОБАВЛЕНО СЮДА: поля для характеристик -->
-                <div class="field">
-                    <label for="add-spec-1">Характеристика 1 (например, Сокет)</label>
-                    <input type="text" id="add-spec-1" name="spec1" placeholder="AM5 или LGA1700">
-                </div>
-
-                <div class="field">
-                    <label for="add-spec-2">Характеристика 2 (например, TDP)</label>
-                    <input type="text" id="add-spec-2" name="spec2" placeholder="120 Вт">
-                </div>
-                <!-- КОНЕЦ ВСТАВКИ -->
+                <!-- СЮДА JS БУДЕТ ВСТАВЛЯТЬ ПОЛЯ ХАРАКТЕРИСТИК -->
+                <div id="dynamic-specs"></div>
 
                 <div class="field">
                     <label for="add-image-url">Ссылка на изображение</label>
