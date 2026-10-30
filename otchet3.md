@@ -134,10 +134,7 @@ Content-Type: application/json
 
 ---
 
-## Скриншоты для отчета
-1. Swagger UI с раскрытыми методами API.
-2. Таблица `components` в DB Browser for SQLite.
-3. Сайт с карточками, загруженными с сервера.
+
 
 ---
 
